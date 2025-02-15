@@ -28,10 +28,10 @@ from PIL import Image
 from fuzzywuzzy import fuzz
 
 
-im = Image.open('/Users/tariromashongamhende/Downloads/slug_logo.png')
+# im = Image.open('/Users/tariromashongamhende/Downloads/slug_logo.png')
 st.set_page_config(
     page_title="Hello",
-    page_icon=im,
+    # page_icon=im,
 )
 
 st.markdown(
