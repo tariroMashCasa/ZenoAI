@@ -11,10 +11,10 @@ from PIL import Image
 
 
 
-im = Image.open('/Users/tariromashongamhende/Downloads/slug_logo.png')
+# im = Image.open('/Users/tariromashongamhende/Downloads/slug_logo.png')
 st.set_page_config(
     page_title="Hello",
-    page_icon=im,
+    # page_icon=im,
 )
 
 st.write(f"<h2 class='black-text'>  Welcome to Notebot - a simple notetaking app by Slug </h2>",unsafe_allow_html=True)
