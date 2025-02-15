@@ -39,7 +39,7 @@ from google.cloud import storage
 from datetime import datetime
 import random
 # Replace with your OpenAI API key
-openai_client = OpenAI(api_key="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")
+openai_client = OpenAI(api_key="aaaaaaa")
 
 #upload the parquet file to GCP
 
