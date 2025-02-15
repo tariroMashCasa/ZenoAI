@@ -37,7 +37,7 @@ from google.oauth2 import service_account
 
 from google.cloud import storage
 from datetime import datetime
-
+import random
 # Replace with your OpenAI API key
 openai_client = OpenAI(api_key="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")
 
@@ -399,7 +399,9 @@ for i, q in enumerate(quiz.questions, 1):
     print(f"A3: {q.options.A3}")
     print(f"A4: {q.options.A4}")
 
-    answer = input("Enter your answer (A1, A2, A3, A4): ")
+    # answer = input("Enter your answer (A1, A2, A3, A4): ")
+    answer = random.choice([q.options.A1, q.options.A2, q.options.A3, q.options.A4])
+
     mark_response = mark_question(q.question, answer, [q.options.A1, q.options.A2, q.options.A3, q.options.A4])
     logging.warning(mark_response)
 
@@ -417,13 +419,16 @@ try:
     log_file = load_csv_from_gcs("notebot-backend", "ai_engine_hackathon/dummy.csv")
     logging.warning(log_file)
 
-    new_log_file = pd.DataFrame()
 
-    # as a date yyyy_mm_dd
-    new_log_file["last_worked_on"] = datetime.now().strftime("%Y_%m_%d")
-    new_log_file["user_log"] = new_log
-    new_log_file["topic"] = "Statistics"
-    new_log_file["subject"] = "bayesian probability"
+    # Create DataFrame with a single row of data
+    new_log_file = pd.DataFrame({
+        "topic": ["Statistics"],
+        "subject": ["bayesian probability"],
+        "last_worked_on": [datetime.now().strftime("%Y_%m_%d")],
+        "user_log": [str(new_log)]
+    })
+
+    logging.warning(new_log_file.head())
 
     # append the new log to the existing log
     log_file = pd.concat([log_file, new_log_file], ignore_index=True)
@@ -433,15 +438,15 @@ try:
 
 except Exception as e:
     logging.warning(f"Error downloading log file: {e}")
+    pass
 
-    new_log_file = pd.DataFrame()
+    # Create DataFrame with a single row of data
+    new_log_file = pd.DataFrame({
+        "topic": ["Statistics"],
+        "subject": ["bayesian probability"],
+        "last_worked_on": [datetime.now().strftime("%Y_%m_%d")],
+        "user_log": [str(new_log)]
+    })
 
-
-# as a date yyyy_mm_dd
-new_log_file["last_worked_on"] = datetime.now().strftime("%Y_%m_%d")
-new_log_file["user_log"] = new_log
-new_log_file["topic"] = "Statistics"
-new_log_file["subject"] = "bayesian probability"
-
-# upload log to gcs
-write_to_gcs("notebot-backend", "ai_engine_hackathon/dummy.csv", new_log_file)
+    # upload log to gcs
+    write_to_gcs("notebot-backend", "ai_engine_hackathon/dummy.csv", new_log_file)
